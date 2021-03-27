@@ -1,0 +1,16 @@
+#! /usr/bin/env bash
+
+this_dir=$(dirname $(readlink -f $0))
+
+server_dir=$this_dir/server
+venv_dir=$server_dir/venv
+
+if [ ! -d "$venv_dir" ] ; then
+    virtualenv -p python3 $venv_dir
+    source $venv_dir/bin/activate
+    pip install -r $server_dir/requirements.txt
+fi
+
+source $venv_dir/bin/activate
+echo Starting server...
+$server_dir/start_stream
